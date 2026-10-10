@@ -1,6 +1,9 @@
+# NOTE: compileSdk 37 requires AGP 9 (AGP 8.x tops out at 34/35). AGP 9 has
+# built-in Kotlin support and rejects the standalone kotlin-android plugin,
+# so only the compose compiler plugin is declared below. Gradle must be 9.x.
 [versions]
-agp = "8.5.2"
-kotlin = "2.0.20"
+agp = "9.2.1"
+kotlin = "2.4.0"
 composeBom = "2024.09.00"
 coreKtx = "1.13.1"
 lifecycleRuntimeKtx = "2.8.5"
@@ -32,5 +35,6 @@ miuix-ui-android = { group = "top.yukonga.miuix.kmp", name = "miuix-ui-android",
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+# No kotlin-android here: AGP 9 provides Kotlin support built in and rejects
+# the standalone plugin. The Compose compiler plugin is still applied separately.
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

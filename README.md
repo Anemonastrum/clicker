@@ -47,7 +47,7 @@ Notes:
 ## Build
 
 Debug/release APKs are built by GitHub Actions
-(`.github/workflows/build.yml`, JDK 17, Gradle 8.7) on every push to
+(`.github/workflows/build.yml`, JDK 17, Gradle 9.5.1) on every push to
 `main`/`master`. Tagging `v*` publishes a release with the APKs.
 
 Local build needs the Android SDK:
@@ -67,9 +67,12 @@ debug key.
   `gradle/libs.versions.toml`; check the
   [getting-started guide](https://github.com/compose-miuix-ui/miuix/blob/HEAD/docs/guide/getting-started.md)
   when upgrading.
-- Toolchain mirrors the HyperKernel project: AGP 8.5.2, Kotlin 2.0.20,
-  Compose BOM 2024.09.00, Gradle 8.7. Stay on Gradle 8.x — AGP 8.5.2 does
-  not support Gradle 9.
+- Toolchain: AGP 9.2.1, Gradle 9.5.1, Kotlin 2.4.0, Compose BOM 2024.09.00,
+  compileSdk 37, targetSdk 34, minSdk 26. AGP 9 has built-in Kotlin support
+  and rejects the standalone `kotlin-android` plugin, so only the Compose
+  compiler plugin is applied. compileSdk 37 is required by miuix-ui-android
+  0.9.4's AAR metadata (`minCompileSdk 37`); targetSdk/minSdk are
+  independent of it and stay at 34/26.
 
 ## Project layout
 

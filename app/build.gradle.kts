@@ -1,8 +1,9 @@
 import java.util.Properties
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    // No kotlin-android: AGP 9 has built-in Kotlin support and rejects it.
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -11,7 +12,9 @@ val hasSigning = signingPropsFile.exists()
 
 android {
     namespace = "id.anemona.clicker"
-    compileSdk = 34
+    // 37: required by miuix-ui-android 0.9.4's AAR metadata (minCompileSdk 37).
+    // compileSdk is independent of targetSdk/minSdk — those stay put.
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "id.anemona.clicker"
@@ -56,8 +59,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
+    // AGP 9 built-in Kotlin: configure the compiler via the kotlin extension.
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 
     packaging {
