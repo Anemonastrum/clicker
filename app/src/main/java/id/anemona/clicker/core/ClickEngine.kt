@@ -8,7 +8,6 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -100,20 +99,20 @@ object ClickEngine {
     private suspend fun runLoop() {
         val svc = ClickAccessibilityService.instance ?: return
         val metrics = svc.resources.displayMetrics
-        while (isActive) {
+        while (coroutineContext.isActive) {
             val current = points
             if (current.isEmpty()) {
                 _status.value = "No touch points configured"
                 return
             }
             for ((index, p) in current.withIndex()) {
-                if (!isActive) return
+                if (!coroutineContext.isActive) return
                 val x = p.xFrac * metrics.widthPixels
                 val y = p.yFrac * metrics.heightPixels
                 if (p.repeatCount <= 0) {
                     // Infinite loop on this single point until stopped.
                     var n = 0
-                    while (isActive) {
+                    while (coroutineContext.isActive) {
                         svc.tap(x, y)
                         n++
                         _status.value = "Point ${index + 1}: tap $n (looping)…"
@@ -122,7 +121,7 @@ object ClickEngine {
                     return
                 }
                 repeat(p.repeatCount) { i ->
-                    if (!isActive) return
+                    if (!coroutineContext.isActive) return
                     svc.tap(x, y)
                     _status.value = "Point ${index + 1}: ${i + 1}/${p.repeatCount}"
                     if (i < p.repeatCount - 1) delay(p.intervalMs)

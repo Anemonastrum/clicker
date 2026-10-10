@@ -32,7 +32,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -559,7 +558,7 @@ class OverlayService : Service() {
     private suspend fun rttLoop() {
         // Initial quick sample so the minimized pill shows RTT promptly.
         sampleRtt()
-        while (isActive) {
+        while (coroutineContext.isActive) {
             delay(30_000)
             sampleRtt()
         }
