@@ -1,0 +1,6 @@
+# Copy to signing.properties and fill in your keystore details.
+# The release build falls back to the debug key when this file is absent.
+storeFile=/path/to/clicker.keystore
+storePassword=changeit
+keyAlias=clicker
+keyPassword=changeit

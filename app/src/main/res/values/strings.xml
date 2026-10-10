@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Clicker</string>
+    <string name="accessibility_service_description">Clicker performs automated taps on the touch points you configure, at the scheduled start time. Enable it to let the clicker tap for you.</string>
+    <string name="overlay_channel_name">Clicker overlay</string>
+    <string name="overlay_channel_description">Keeps the floating clicker controls and the click engine running.</string>
+    <string name="overlay_notification_title">Clicker is running</string>
+    <string name="overlay_notification_text">Tap to open Clicker settings.</string>
+</resources>
